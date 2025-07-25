@@ -9,39 +9,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        board: [ "nice_nano_v2" ] # Thay đổi nếu dùng board khác
-        shield: [ "kestrel47" ]   # Tên shield từ file metadata
-        side: [ "left", "right" ] # Nếu là bàn phím chia đôi
-        include:
-          - board: nice_nano_v2
-            shield: kestrel47
-            side: left
-            artifact_name: kestrel47_left
-          - board: nice_nano_v2
-            shield: kestrel47
-            side: right
-            artifact_name: kestrel47_right
-
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Phiên bản mới nhất
         with:
           submodules: recursive
+          fetch-depth: 0  # Tùy chọn: Fetch toàn bộ history nếu cần
 
       - name: Build Firmware
         uses: zmkfirmware/zmk-build-action@v0.3.0
         with:
-          board: ${{ matrix.board }}
-          shield: ${{ matrix.shield }}
-          side: ${{ matrix.side }}
-          keymap: alpha # Tên keymap mặc định từ file .keymap
+          board: nice_nano_v2
+          shield: kestrel47
+          keymap: alpha
 
-      - name: Upload Firmware Artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload Firmware
+        uses: actions/upload-artifact@v4  # Cập nhật lên v4
         with:
-          name: ${{ matrix.artifact_name }}_firmware
-          path: |
-            firmware/*.uf2
-            firmware/*.bin
+          name: kestrel47_firmware
+          path: firmware/*.uf2
