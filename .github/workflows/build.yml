@@ -8,23 +8,23 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # Chỉ định rõ Ubuntu 24.04
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4  # Phiên bản mới nhất
+        uses: actions/checkout@v4
         with:
           submodules: recursive
-          fetch-depth: 0  # Tùy chọn: Fetch toàn bộ history nếu cần
+          fetch-depth: 0
 
       - name: Build Firmware
-        uses: zmkfirmware/zmk-build-action@v0.3.0
+        uses: zmkfirmware/zmk-build@v2  # Sử dụng action mới
         with:
           board: nice_nano_v2
           shield: kestrel47
           keymap: alpha
 
       - name: Upload Firmware
-        uses: actions/upload-artifact@v4  # Cập nhật lên v4
+        uses: actions/upload-artifact@v4
         with:
           name: kestrel47_firmware
           path: firmware/*.uf2
