@@ -1,8 +1,0 @@
-file_format: "1"
-id: kestrel47
-name: kestrel47
-type: shield
-url: https://github.com/calvin-mcd/Kestrel47
-requires: [nice_nano]
-features:
-- keys
